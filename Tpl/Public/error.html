@@ -1,0 +1,39 @@
+<include file="Public:head" />
+
+</head>
+
+<body>
+<!-- header -->
+<include file="Public:header" />
+<!-- /header -->
+
+<!-- content -->
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>Error occured!&nbsp;&nbsp;<small>There is something wrong with this page</small></h1>
+            </div>
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>File</dt>
+                    <dd>{$e['file']}</dd>
+                    <dt>line</dt>
+                    <dd>{$e['line']}</dd>
+                    <dt>Message</dt>
+                    <dd>{$e['message']}</dd>
+                    <dt>Trace</dt>
+                    <dd>{$e['trace']}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /content -->
+
+<!-- footer -->
+<include file="Public:footer" />
+<!-- /footer -->
+
+</body>
+</html>

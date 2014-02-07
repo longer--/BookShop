@@ -1,0 +1,25 @@
+body {
+    padding-top: 70px;
+}
+.navbar {
+    padding: 0 2em;
+    z-index: 9998;
+}
+.dropdown-menu {
+    z-index: 9999;
+}
+.tooltip-inner {
+    padding: 1em 1em;
+}
+.tooltip-arrow {
+
+}
+/**#footer {
+    padding: 0 1em;
+    height: auto;
+    line-height: 2em;
+    width: 100%;
+    left: 0;
+    background-color: rgb(16, 16, 16);
+}*/
+

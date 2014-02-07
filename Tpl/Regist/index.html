@@ -1,0 +1,64 @@
+<include file="Public:head" />
+
+</head>
+<body>
+<!-- header -->
+<include file="Public:header" />
+<!-- /header -->
+
+<!-- content -->
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Create account</h3>
+                </div>
+
+                <div class="panel-body">
+                <form id="form" method="POST" action="/Regist/doRegist" role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input id="username" name="username" class="form-control" type="text" placeholder="Choose a name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input id="email" name="email" class="form-control" type="text" placeholder="Type your e-mail">
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-info btn-block" value="Create account">
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<!-- /content -->
+
+<!-- footer -->
+<include file="Public:footer" />
+<!-- /footer -->
+
+<js href="__PUBLIC__/js/jquery.validate.js" />
+<js href="__PUBLIC__/js/jquery-validate.bootstrap-tooltip.js" />
+<script type="text/javascript">
+(function ($) {
+    $('#username').tooltip({
+        title:     'Username',
+        container: 'body',
+        html:      true,
+        trigger:   'focus',
+    }).tooltip('show');
+})(jQuery);
+</script>
+</body>
+</html>
