@@ -24,7 +24,7 @@ class SecurityAction extends Action {
     public function __construct() {
         parent::__construct();
 
-        $this->_iniConfigs();
+        $this->_initConfigs();
     }
 
     /**
@@ -36,7 +36,7 @@ class SecurityAction extends Action {
      *  @param   none
      *  @return  void
      */
-    private function _iniConfigs() {
+    private function _initConfigs() {
         $this->_encryption_key = C('SECURITY.ENCRYPTION_KEY');
     }
     

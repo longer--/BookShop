@@ -11,7 +11,6 @@ class EmptyAction extends Action {
 			'title'       => '404',
 			'description' => 'Page not found',
 		));
-		R('Public/getSeo');
 		R('Public/setSeos', $seos);
         
         $this->display('Public:404');  
