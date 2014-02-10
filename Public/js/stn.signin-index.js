@@ -53,7 +53,7 @@ jQuery(function ($) {
                         } else {
                             $('input[type="submit"]').val('Sign in successful, jump to previous page');
                             setTimeout(function () {
-                                window.location.href = json.retUrl;
+                                window.location.replace = json.retUrl;
                             }, 2 * 1000);
                         }
                     },
