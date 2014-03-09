@@ -5,3 +5,7 @@
 /ThinkPHP
 # 忽略图片资源
 /Public/img
+# 忽略SVN目录
+/.svn
+# 忽略隐藏文件
+.*

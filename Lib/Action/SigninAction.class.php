@@ -38,27 +38,29 @@ class SigninAction extends Action {
 
     /**
      *  登陆
-     *
+     *  禁用JavaScript时能够正常使用
      *  @author  Santino Wu
      *  @access  public
      *  @param   none
      *  @return  void
      */
     public function doSignin() {
-        if (!$this->isAjax()) die('Access denied');
+        if (session('is_signin') !== null) {
+            if ($this->isAjax()) {
+                $jsonData = array(
+                    'status' => false,
+                    'info'   => 'You have already sign-ined',
+                );
+                $this->ajaxReturn($jsonData, 'JSON');
+            } else {
+                R('Public/showMessage', array('You have already sign-ined'));
+            }
+        }
 
         /** 初始化 */
         $userModel = M('user');
         $jsonData  = array();
         $username  = '';
-
-        if (session('is_signin') !== null) {
-            $jsonData = array(
-                'status' => false,
-                'info'   => 'You have already sign-ined',
-            );
-            $this->ajaxReturn($jsonData, 'JSON');
-        }
 
         /**
          *  验证令牌
@@ -66,11 +68,9 @@ class SigninAction extends Action {
          *  由于ThinkPHP3.2不支持AJAX验证表单,
          *  转而采取客户端防止重复提交的方案。
          */
-        /**if (!$userModel->autoCheckToken($_POST)) {
-            $this->ajaxReturn(false, 'Wrong token', 0);
-
-            return;
-        }*/
+        if (!$this->isAjax() && !$userModel->autoCheckToken($_POST)) {
+            R('Public/showMessage', array('Wrong token, please refresh previous page', true));
+        }
 
         /** 验证用户名和密码 */
         $username  = $userModel->where("(username = '%s' OR email = '%s') AND password = '%s'",
@@ -78,24 +78,32 @@ class SigninAction extends Action {
                                 ->getField('username');
 
         if (empty($username)) {
-            $jsonData = array(
-                'status' => false,
-                'info'   => 'Fail to sign-in, please check your name or e-mail and password!',
-            );
-            $this->ajaxReturn($jsonData, 'JSON');
+            if ($this->isAjax()) {
+                $jsonData = array(
+                    'status' => false,
+                    'info'   => 'Fail to sign-in, please check your name or e-mail and password!',
+                );
+                $this->ajaxReturn($jsonData, 'JSON');
+            } else {
+                R('Public/showMessage', array('Fail to sign-in, please check your name or e-mail and password!', true));
+            }
         } else {
             $this->autoSignin($username);
 
-            $jsonData = array(
-                'status' => true,
-                'info'   => 'Sign-in successful',
-                'retUrl' => session('last_page'),
-            );
-            $this->ajaxReturn($jsonData, 'JSON');
+            if ($this->isAjax()) {
+                $jsonData = array(
+                    'status' => true,
+                    'info'   => 'Signed in successful',
+                    'retUrl' => session('last_page'),
+                );
+                $this->ajaxReturn($jsonData, 'JSON');
+            } else {
+                R('Public/showMessage', array('Signed in successful'));
+            }
         }
     }
 
-    public function autoSignin($username) {
+    private function autoSignin($username) {
         session('is_signin', true);
         session('username',  R('Security/encrypt', array($username)));
     }

@@ -1,4 +1,6 @@
 <?php
+defined('BOOK_SHOP_PROJECT') or exit();
+
 /**
  *  Public控制器
  *  包含对外接口
@@ -109,11 +111,18 @@ class PublicAction extends Action {
      *  @param   none
      *  @return  void
      */
-    public function regCrtPage() {
+    public function regCrtPage($isAction = false) {
         $crtPage = session('current_page');
-        if ($crtPage !== __URL__) {
-            session('last_page', $crtPage);
-            session('current_page', __URL__);
+        if ($isAction) {
+            if ($crtPage !== __ACTION__) {
+                session('last_page', $crtPage);
+                session('current_page', __URL__);
+            }
+        } else {
+            if ($crtPage !== __URL__) {
+                session('last_page', $crtPage);
+                session('current_page', __URL__);
+            }
         }
     }
 
@@ -122,11 +131,12 @@ class PublicAction extends Action {
      *
      *  @author  Santino Wu
      *  @date    2014-01-20
-     *  @param   mixed       $message  消息
-     *  @param   boolean     $is_ajax  是否为ajax显示
+     *  @param   $message     ixed     消息
+     *  @param   $is_refresh  boolean  是否刷新上一页页面（用于刷新表单TOKEN）
+     *  @param   $is_ajax     boolean  是否为ajax显示
      *  @return  void
      */
-    public function showMessage($message, $ajax = false) {
+    public function showMessage($message, $is_refresh = false, $ajax = false) {
         extract($message);
 
         if ($ajax || IS_AJAX) {
@@ -147,6 +157,8 @@ class PublicAction extends Action {
             'content' => '',
             'interval' => $this->_messageConfigs['interval'],
             'lastPage' => session('last_page') ? session('last_page') : '/',
+            'crtPage' => session('current_page') ? session('current_page') : '/',
+            'refresh' => $is_refresh,
         );
 
         if (is_array($message)) {

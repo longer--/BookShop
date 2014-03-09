@@ -1,4 +1,6 @@
 <?php
+defined('BOOK_SHOP_PROJECT') or exit();
+
 /**
  *  网络安全控制器
  *
