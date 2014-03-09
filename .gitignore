@@ -1,0 +1,7 @@
+# 忽略备份文件
+*~
+*.swp
+# 忽略ThinkPHP框架文件
+/ThinkPHP
+# 忽略图片资源
+/Public/img

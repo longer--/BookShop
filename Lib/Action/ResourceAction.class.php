@@ -48,8 +48,6 @@ class ResourceAction extends Action {
         $cExpire = null;
         $cLength = null;
 
-        //$type    = strtolower($type);
-
         $sep    = C('LOAD_RESOURCE.FILE_SEPARATOR');
         $pathes = C('LOAD_RESOURCE.FILE_PATH');
         $regExp = C('LOAD_RESOURCE.FILE_REG_EXP');
@@ -68,9 +66,8 @@ class ResourceAction extends Action {
         if (empty($files)) die('');
 
         /** 获取缓存文件名 */
-        //sort($files) && $cName = md5(implode('', $files));
         $cFile = $files;
-        sort($cFile) && $cName = implode('-', $cFile);
+        sort($cFile) && $cName = md5(implode('-', $cFile));
         if ($cName === null) die('');
 
         /** 读取缓存（如果缓存存在） */
@@ -93,22 +90,9 @@ class ResourceAction extends Action {
             foreach ($files as $val) {
                 /** 判断文件是否存在 */
                 $file = "{$path}{$val}";
-                #if (!file_exists($file)) {
-                #    $content .= "/** 404: file not found! ({$path}{$val}) */\n";
-                #    continue;
-                #}
                 if (!file_exists($file)) continue;
 
                 $c = file_get_contents($file);
-
-                /** 压缩内容 */
-                // 删除单行注释
-                //$c = preg_replace("/\/\/.*/", '', $c);
-                // 删除多行注释
-                //$c = str_replace(array("\r\n", "\r", "\n"), '',$c);
-                //$c = preg_replace("/\/\*\b(?:(?!\*\/).)*\b\*\//", '', $c);
-                // 替换缩进符号
-                //$c = preg_replace("/\t*(\ ){2,}/", ' ', $c);
 
                 $content .= "{$c}\n";
             }
@@ -118,7 +102,7 @@ class ResourceAction extends Action {
         if (!empty($content)) {
             $cDate = date('Y-m-d H:i:s');
             $eDate = date('Y-m-d H:i:s', time() + $cExpire);
-            S($cName, "/**\n *  RESOURCE CACHE\n *  CREATION TIME: {$cDate}\n *  EXPIRATION TIME: {$eDate}\n */\n" . $content);
+            S($cName, "/**\n *  RESOURCE CACHE - {$cName}\n *  CREATION TIME: {$cDate}\n *  EXPIRATION TIME: {$eDate}\n */\n" . $content);
         }
 
         echo $content;

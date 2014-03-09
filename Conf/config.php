@@ -53,10 +53,9 @@ return array(
          *  存储路径为APP_PATH[项目目录]/PATH，
          *  如未指定存储路径则按系统默认缓存路径（APP_PATH/Runtime/Temp）储存
          */
-        'CACHE_PATH'   => null,
+        'CACHE_PATH'   => APP_PATH . 'Runtime/Resource',
         /** 过期时间（秒数）默认为1小时 */
         'CACHE_EXPIRE' => 1 * 60 * 60,
-        //'CACHE_EXPIRE' => 5,
         /** 缓存文件队列长度，默认为20 */
         'CACHE_LENGTH' => 20,
     ),
